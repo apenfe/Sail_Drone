@@ -1,0 +1,15 @@
+*.metadata
+*.classpath
+*.project
+*.settings
+bin/
+LABERINTO/
+LABERINTO_OTROS/
+PRACTICAS_2_EVALUACION/
+PROYECTO/
+PROYECTO_BETA/
+PROYECTO_V0.2.0/
+PROYECTO_V0.3.0/
+UOC/
+assets/
+.Rproj.user
