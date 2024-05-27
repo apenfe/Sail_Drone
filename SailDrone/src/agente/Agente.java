@@ -435,25 +435,15 @@ public class Agente implements Ship{
 	@Override
 	public double calculateFitness() {
 		
-		// recorrer un arrary y ver si ya h sido visitada la casilla, asi evito bucles, tambien puedo hacerlo con un area de margen
-		// si apunta hacia el 0,2 mas
-		// si uno de ellos  ha llegado a salida, contar los puntos extra y añadir penalizacion por pasos, para comprara con otros que si han llegado en menos pasos
-		
-		
-		 //double distanciaSalida = entorno.distanciaSalida(x, y);
-	   
+		//
+		return pasos;
+		//
+	   /*
 	     double stepPenalty = pasos;
 	     fitness+=stepPenalty*2;
 	     double penalizacionChoque = sensorChoque*1;
-	     //fitness-= penalizacionChoque;
 	     fitness-= penalizacionChoque;
 	        
-	   //  if(entorno.esSalida(x, y)) {
-	    	 
-	    //	 fitness=Double.MAX_VALUE-30;
-	    	 
-	    // }
-	     
 	     if(pasos>this.maxPasos-1) {
 	    	 fitness=Double.MIN_VALUE;
 	     }
@@ -463,7 +453,7 @@ public class Agente implements Ship{
 	     }
 
 	     return fitness;
-		
+		*/
 	}
 
 	@Override

@@ -5,6 +5,7 @@ import entorno.Entorno;
 import red.*;
 import visual.EstablecerCasillas;
 import visual.Plot6Agent;
+import visual.VerEntrenamiento;
 import ga.*;
 import processing.core.PApplet;
 
@@ -53,12 +54,12 @@ public class Simulacion{
 	
 	public void probarRandom() {
 		
-		establecerEntradaSalida();
+		int pasos = configurarEntorno();
 		
 		System.out.println("Preparación de agentes y entorno...");
 		int numAgentes = Entradas.entero("¿Cuantos agentes desea añadir a la simulación? ");
 		agentes = new Agente[numAgentes];
-		
+		estadoSimulacion(numAgentes);
 		for (int i = 0; i < agentes.length; i++) {
 			
 			agentes[i] = new Agente(i,this.entorno);
@@ -71,6 +72,7 @@ public class Simulacion{
 			}
 	
 			agentes[i].setCromosomas(param);	
+			agentes[i].setMaxPasos(pasos);
 			
 		}
 
@@ -95,7 +97,7 @@ public class Simulacion{
 	
 	public void probarADN() {
 		
-		this.establecerEntradaSalida();
+		int pasos = this.configurarEntorno();
 		
 		String nombreADN = Entradas.texto("\nInserte el nombre del ADN a cargar: ");
 			
@@ -118,6 +120,7 @@ public class Simulacion{
 			
 			agentes[i] = new Agente(i,this.entorno);	
 			agentes[i].setCromosomas(this.adn_red);
+			agentes[i].setMaxPasos(pasos);
 			
 		}
 
@@ -140,10 +143,9 @@ public class Simulacion{
 
 	}
 	
-	
 	public void entrenarDesdeCeroAlgoritmogenetico() {
 		
-		this.establecerEntradaSalida();
+		int pasos = this.configurarEntorno();
 		
 		System.out.println("Preparación de agentes y entorno...");
 		
@@ -153,7 +155,17 @@ public class Simulacion{
 		this.ga = new GeneticAlgorithm(numAgentes, 0.02, 0.90, 12,this.entorno);
 
 		Poblacion poblacion = ga.iniciarPoblacion(this.red.getParametros().length); // numero de cromosomas
-
+		
+		////
+		VerEntrenamiento applet = new VerEntrenamiento(numAgentes);
+	    PApplet.runSketch(new String[]{"visual/VerEntrenamiento"}, applet);
+		
+		//////
+		
+	    for (int i = 0; i <poblacion.size(); i++) {
+			poblacion.getIndividual(i).setMaxPasos(pasos);
+		}
+	    
 		ga.calculoFitnessPoblacion(poblacion);
 		
 		int generacion = 1;
@@ -171,14 +183,23 @@ public class Simulacion{
 			this.red.probarPoblacion(poblacion);
 			
 			generacion++;
-			System.out.println();
-			String respuesta = Entradas.texto("¿Desea ver la "+generacion+" generacion? S - SI ");
 			
-			if(respuesta.equalsIgnoreCase("S")) {
+			applet.updateGeneracion(generacion);
+			System.out.println();
+			//String respuesta = Entradas.texto("¿Desea ver la "+generacion+" generacion? S - SI ");
+			
+			for (int i = 0; i < poblacion.size(); i++) {
 				
-				verSimulacion(poblacion.getIndividuals(),generacion,poblacion.getFittest(0).getFitness());
+				
+				applet.addFitness(poblacion.getIndividual(i).getFitness(),i);
 				
 			}
+			
+		//	if(respuesta.equalsIgnoreCase("S")) {
+				
+			//	verSimulacion(poblacion.getIndividuals(),generacion,poblacion.getFittest(0).getFitness());
+				
+			//}
 			
 		}
 		
@@ -221,24 +242,24 @@ public class Simulacion{
 
 	}
 	
-	
-	private void establecerEntradaSalida() {
+	private int configurarEntorno() {
 		
 		EstablecerCasillas applet = new EstablecerCasillas(this.entorno.getCarta());
 		applet.setXY((int)entorno.getAncho(),(int)entorno.getAlto());
 		PApplet.runSketch(new String[]{"visual/EstablecerCasillas"}, applet);
 		double[] meter = new double[4];
-		//System.out.println();
+	
 	    do {
 	    	int count=0;
 
 	    	meter = applet.getInOut();
 	    	System.out.print("");
 	    	for (int i = 0; i < meter.length; i++) {
-	    		//System.out.print("");
+	    		
 				if(meter[i]!=0) {
 					count++;
 				}
+				
 			}
 
 	    	if(count==4) {
@@ -246,19 +267,22 @@ public class Simulacion{
 	    	}
 
 	    }while(true);
-
-	    this.entorno.setAreaAprox(30);
+	    
 		this.entorno.setSalidaX(meter[3]); // y
 		this.entorno.setSalidaY(meter[2]); // x
 		this.entorno.setEntradaX(meter[1]); // y
 		this.entorno.setEntradaY(meter[0]); // x
-		this.entorno.setPaso(0.3);
 		
-		//int max = Entradas.texto("\nInserte el numero de pasos maximo ("+e+"): ");
-		//System.out.println();
+		int area = Entradas.entero("\nInserte el area de aproximacion para la salida (DEFAULT 20): ");
+		this.entorno.setAreaAprox(area);
+		
+		int paso = Entradas.entero("\nInserte el paso del entorno (DEFAULT 0.2): ");
+		this.entorno.setPaso(paso);
+		
+		int pasos = Entradas.entero("\nInserte el nº maximo de pasos: ");
+		return pasos;
 		
 	}
-	
 	
 	private void verSimulacion(Agente[] agentes, int generacion, double fitness) {
 		
@@ -270,9 +294,16 @@ public class Simulacion{
 		
 	}
 	
+	private void estadoSimulacion(int numAgentes) {
+		
+		VerEntrenamiento applet = new VerEntrenamiento(numAgentes);
+	    PApplet.runSketch(new String[]{"visual/VerEntrenamiento"}, applet);
+		
+	}
+	
 	public void continuarEntrenamiento() {
 		
-		establecerEntradaSalida();
+		int pasos = this.configurarEntorno();
 		
 		String nombreADN = Entradas.texto("\nInserte el nombre del ADN a cargar: ");
 		
@@ -325,6 +356,8 @@ public class Simulacion{
 			}else {
 				poblacion.getIndividual(i).setCromosomas(adn_red);
 			}
+			
+			poblacion.getIndividual(i).setMaxPasos(pasos);
 			
 		}
 		
@@ -496,6 +529,5 @@ public class Simulacion{
 	public void setAdn_red(double[] adn_red) {
 		this.adn_red = adn_red;
 	}
-
 	
 }
