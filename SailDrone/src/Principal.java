@@ -1,5 +1,6 @@
 import clases.Entradas;
 import clases.Simulacion;
+import ventanas.Index;
 
 public class Principal{
 	
@@ -29,6 +30,8 @@ public class Principal{
 	public static Simulacion simulacionActual;
 	
 	public static void main(String[] args) {
+		
+		Index index = new Index();
 		
 		menuPrincipal();
 		
