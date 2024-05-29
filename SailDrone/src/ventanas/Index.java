@@ -2,14 +2,17 @@ package ventanas;
 
 import javax.swing.*;
 
+import clases.Simulacion;
+
 import java.awt.*;
 import java.awt.event.*;
 
 public class Index extends JFrame implements ActionListener{
 	
+	public Simulacion simulacion = new Simulacion();
 	private Container contenedor;
 	private JLabel icon;
-	private JButton cargar, crear, entreno, prueba, infoActual, salir;
+	public JButton cargar, crear, entreno, prueba, infoActual, salir;
 	private JLabel lblNewLabel_1, titulo;
 	
 	public Index() {
@@ -145,7 +148,7 @@ public class Index extends JFrame implements ActionListener{
 
 	private void cargar() {
 
-		new Cargar(this);
+		new Cargar(this,this.simulacion);
 		this.setVisible(false);
 
 	}
@@ -158,7 +161,7 @@ public class Index extends JFrame implements ActionListener{
 
 	private void crear() {
 
-		new Crear(this);
+		new Crear(this,this.simulacion);
 		this.setVisible(false);
 
 	}
