@@ -8,17 +8,22 @@ import java.awt.event.*;
 public class Index extends JFrame implements ActionListener{
 	
 	private Container contenedor;
-	private JLabel titulo, labelInfo, icon;
+	private JLabel icon;
 	private JButton cargar, crear, entreno, prueba, infoActual, salir;
+	private JLabel lblNewLabel_1, titulo;
 	
 	public Index() {
 		
-		this.setTitle("Sail Drone --- Rev 1.0.0");
-		this.setBounds(60,60,1800,900);
+		this.setTitle("___Sail Drone___");
+		this.setBounds(300,80,1280,800);
+		
+		// Establecer el icono de la ventana
+        this.setIconImage(new ImageIcon("files\\GUI\\icono.png").getImage());
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		this.contenedor=this.getContentPane();
 		this.contenedor.setLayout(null);
+		this.contenedor.setBackground(Color.black);
 		
 		this.titulo();
 		this.labels();
@@ -60,10 +65,11 @@ public class Index extends JFrame implements ActionListener{
 	}
 	
 	private void titulo() {
-
-		this.titulo = new JLabel("Sail Drone Machine Learning");
-		this.titulo.setFont(new Font("Arial", Font.BOLD, 24));
-		this.titulo.setBounds(721, 19, 341, 40);
+		
+		this.titulo= new JLabel("Unmaned Surface Vehicle Trainer");
+		this.titulo.setFont(new Font("Arial",Font.PLAIN,30));
+		this.titulo.setBounds(30, 430, 500, 30);
+		this.titulo.setForeground(Color.white);
 		this.contenedor.add(this.titulo);
 
 	}
@@ -72,68 +78,74 @@ public class Index extends JFrame implements ActionListener{
 		
 		this.entreno=new JButton("Entrenar agentes");
 		this.entreno.setFont(new Font("Arial", Font.PLAIN, 16));
-		this.entreno.setBounds(21,383,169,25);
+		this.entreno.setBounds(62,200,157,37);
 		this.entreno.addActionListener(this);
+		this.entreno.setVisible(true);
+		this.entreno.setBackground(Color.LIGHT_GRAY);
 		this.entreno.setEnabled(false);
 		this.contenedor.add(this.entreno);
 		
 		this.prueba=new JButton("Probar agentes");
 		this.prueba.setFont(new Font("Arial", Font.PLAIN, 16));
-		this.prueba.setBounds(21,347,169,25);
+		this.prueba.setBounds(62,248,157,37);
 		this.prueba.addActionListener(this);
+		this.prueba.setVisible(true);
+		this.prueba.setBackground(Color.LIGHT_GRAY);
 		this.prueba.setEnabled(false);
 		this.contenedor.add(this.prueba);	
 		
 		this.cargar=new JButton("Cargar datos");
 		this.cargar.setFont(new Font("Arial", Font.PLAIN, 16));
-		this.cargar.setBounds(21,281,169,25);
-		this.cargar.addActionListener(this);
+		this.cargar.setBounds(62,152,157,37);
+		this.cargar.addActionListener(this);	
+		this.cargar.setVisible(true);
+		this.cargar.setBackground(Color.LIGHT_GRAY);
 		this.contenedor.add(this.cargar);
 		
 		this.crear=new JButton("Crear datos");
 		this.crear.setFont(new Font("Arial", Font.PLAIN, 16));
-		this.crear.setBounds(21,245,169,25);
+		this.crear.setBounds(62,104,157,37);
 		this.crear.addActionListener(this);
+		this.crear.setVisible(true);
+		this.crear.setBackground(Color.LIGHT_GRAY);
 		this.contenedor.add(this.crear);
 		
-		this.infoActual=new JButton("Ver datos actuales");
+		this.infoActual=new JButton("Informacion");
 		this.infoActual.setFont(new Font("Arial", Font.PLAIN, 16));
-		this.infoActual.setBounds(21,311,169,25);
+		this.infoActual.setBounds(62,296,157,37);
 		this.infoActual.addActionListener(this);
+		this.infoActual.setVisible(true);
+		this.infoActual.setBackground(Color.LIGHT_GRAY);
 		this.infoActual.setEnabled(false);
 		this.contenedor.add(this.infoActual);
 		
 		this.salir=new JButton("Salir");
 		this.salir.setFont(new Font("Arial", Font.PLAIN, 16));
-		this.salir.setBounds(21,419,169,25);
+		this.salir.setBounds(62,344,157,37);
 		this.salir.addActionListener(this);
+		this.salir.setBackground(Color.LIGHT_GRAY);
 		this.contenedor.add(this.salir);
 		
 	}
 	
 	private void labels() {
-
-		// label info
-		this.labelInfo = new JLabel("Entrenador para controladores de drones acuaticos");
-		this.labelInfo.setFont(new Font("Arial", Font.BOLD, 20));
-		this.labelInfo.setBounds(640, 70, 504, 25);
-		this.contenedor.add(this.labelInfo);
 		
-		// label icon
-		this.icon = new JLabel("");
-		icon.setBackground(UIManager.getColor("Button.darkShadow"));
-		icon.setForeground(new Color(192, 192, 192));
-		icon.setIcon(new ImageIcon(
-				"C:\\Users\\adria\\DAW\\1º AÑO\\PROGRAMACION\\maze_solver\\GUI_laberinto\\images\\pic004.jpg"));
-		this.icon.setFont(new Font("Arial", Font.BOLD, 20));
-		this.icon.setBounds(220, 146, 384, 273);
-		this.contenedor.add(this.icon);
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\adria\\Desktop\\saildrone\\SailDrone\\files\\GUI\\banner.png"));
+		lblNewLabel.setBounds(28, 11, 235, 82);
+		getContentPane().add(lblNewLabel);
+		
+		lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\adria\\Desktop\\saildrone\\SailDrone\\files\\GUI\\portada.png"));
+		lblNewLabel_1.setBounds(273, 0, 991, 761);
+		getContentPane().add(lblNewLabel_1);
+		
 
 	}
 
 	private void cargar() {
 
-		Cargar cargar = new Cargar();
+		new Cargar(this);
 		this.setVisible(false);
 
 	}
@@ -146,27 +158,27 @@ public class Index extends JFrame implements ActionListener{
 
 	private void crear() {
 
-		Crear cargar = new Crear();
+		new Crear(this);
 		this.setVisible(false);
 
 	}
 
 	private void entreno() {
 
-		Entrenar entrenar = new Entrenar();
+		new Entrenar(this);
 		this.setVisible(false);
 
 	}
 
 	private void prueba() {
 
-		Probar probar = new Probar();
+		new Probar(this);
 		this.setVisible(false);
 	}
 	
 	private void infoActual() {
 
-		Info info = new Info();
+		new Info(this);
 		this.setVisible(false);
 
 	}

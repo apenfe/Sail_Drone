@@ -156,12 +156,6 @@ public class Simulacion{
 
 		Poblacion poblacion = ga.iniciarPoblacion(this.red.getParametros().length); // numero de cromosomas
 		
-		////
-		VerEntrenamiento applet = new VerEntrenamiento(numAgentes);
-	    PApplet.runSketch(new String[]{"visual/VerEntrenamiento"}, applet);
-		
-		//////
-		
 	    for (int i = 0; i <poblacion.size(); i++) {
 			poblacion.getIndividual(i).setMaxPasos(pasos);
 		}
@@ -184,22 +178,14 @@ public class Simulacion{
 			
 			generacion++;
 			
-			applet.updateGeneracion(generacion);
 			System.out.println();
-			//String respuesta = Entradas.texto("¿Desea ver la "+generacion+" generacion? S - SI ");
+			String respuesta = Entradas.texto("¿Desea ver la "+generacion+" generacion? S - SI ");
 			
-			for (int i = 0; i < poblacion.size(); i++) {
+			if(respuesta.equalsIgnoreCase("S")) {
 				
-				
-				applet.addFitness(poblacion.getIndividual(i).getFitness(),i);
+				verSimulacion(poblacion.getIndividuals(),generacion,poblacion.getFittest(0).getFitness());
 				
 			}
-			
-		//	if(respuesta.equalsIgnoreCase("S")) {
-				
-			//	verSimulacion(poblacion.getIndividuals(),generacion,poblacion.getFittest(0).getFitness());
-				
-			//}
 			
 		}
 		
@@ -276,7 +262,7 @@ public class Simulacion{
 		int area = Entradas.entero("\nInserte el area de aproximacion para la salida (DEFAULT 20): ");
 		this.entorno.setAreaAprox(area);
 		
-		int paso = Entradas.entero("\nInserte el paso del entorno (DEFAULT 0.2): ");
+		double paso = Entradas.decimal("\nInserte el paso del entorno (DEFAULT 0.2): ");
 		this.entorno.setPaso(paso);
 		
 		int pasos = Entradas.entero("\nInserte el nº maximo de pasos: ");

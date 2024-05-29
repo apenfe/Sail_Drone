@@ -158,10 +158,37 @@ public class Entorno{
 
 		int ix = (int) x;
 		int iy = (int) y;
-
+		    
 		// Verificar que las coordenadas estén dentro de los límites de la imagen
 		if (ix >= 0 && ix < mapa.length && iy >= 0 && iy < mapa[0].length) {
+			
 			return (mapa[ix][iy][0] == 210 && mapa[ix][iy][1] == 180 && mapa[ix][iy][2] == 142);
+		}
+
+		return false;
+
+	}
+	
+	private boolean esAgua(double x, double y) {
+
+		int ix = (int) x;
+		int iy = (int) y;
+		    
+		// Verificar que las coordenadas estén dentro de los límites de la imagen
+		if (ix >= 0 && ix < mapa.length && iy >= 0 && iy < mapa[0].length) {
+		/*	
+			if(mapa[ix][iy][0] == 0 && mapa[ix][iy][1] == 0 && mapa[ix][iy][2] == 255) {
+				return true;
+			}else if(mapa[ix][iy][0] == 0 && mapa[ix][iy][1] == 100 && mapa[ix][iy][2] == 255) {
+				return true;
+			}else if(mapa[ix][iy][0] == 0 && mapa[ix][iy][1] == 150 && mapa[ix][iy][2] == 255) {
+				return true;
+			}
+			*/
+			
+			if(mapa[ix][iy][2] >=200 && mapa[ix][iy][2]<=255) {
+				return true;
+			}
 		}
 
 		return false;
@@ -170,7 +197,8 @@ public class Entorno{
 	
 	public boolean fueraLimites(double x, double y) {
 		
-		return esTierra(x,y) || x>alto||x<0||y>ancho||y<0;
+		//return esTierra(x,y) || x>alto||x<0||y>ancho||y<0;
+		return !esAgua(x,y) || x>alto||x<0||y>ancho||y<0;
 		
 	}
 	

@@ -436,9 +436,9 @@ public class Agente implements Ship{
 	public double calculateFitness() {
 		
 		//
-		return pasos;
+		//return pasos;
 		//
-	   /*
+	   
 	     double stepPenalty = pasos;
 	     fitness+=stepPenalty*2;
 	     double penalizacionChoque = sensorChoque*1;
@@ -453,7 +453,7 @@ public class Agente implements Ship{
 	     }
 
 	     return fitness;
-		*/
+		
 	}
 
 	@Override
