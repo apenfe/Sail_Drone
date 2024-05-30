@@ -135,7 +135,6 @@ public class Simulacion{
 		return true;
 	}
 	
-	
 	public void probarADN() {
 		
 		int pasos = this.configurarEntorno();
@@ -295,8 +294,9 @@ public class Simulacion{
 		if(adn) {
 			
 			String nombreADN = Entradas.texto("Inserte el nombre del ADN a guadar: ");
+			String descripcion = Entradas.texto("Inserte una descricion para este ADN: ");
 			
-			if(guardarADN(nombreADN,poblacion.getFittest(0))) {
+			if(guardarADN(nombreADN,poblacion.getFittest(0),descripcion)) {
 				
 				System.out.println("ADN guardado correctamente");
 				
@@ -307,6 +307,40 @@ public class Simulacion{
 			}
 			
 		}
+
+	}
+	
+	public Agente entrenarDesdeCeroGUI(int numAgentes, int numGeneraciones, int pasos) {
+		
+		this.ga = new GeneticAlgorithm(numAgentes, 0.02, 0.90, 12,this.entorno);
+
+		Poblacion poblacion = ga.iniciarPoblacion(this.red.getParametros().length); // numero de cromosomas
+		
+	    for (int i = 0; i <poblacion.size(); i++) {
+			poblacion.getIndividual(i).setMaxPasos(pasos);
+		}
+	    
+		ga.calculoFitnessPoblacion(poblacion);
+		
+		int generacion = 1;
+		
+		while (ga.condicionTerminacion(generacion,numGeneraciones) == false) {
+			
+			poblacion = ga.cruzarPoblacion(poblacion,entorno);
+			
+			poblacion = ga.mutarPoblacion(poblacion);
+			
+			ga.calculoFitnessPoblacion(poblacion);
+			
+			this.red.probarPoblacion(poblacion);
+			
+			generacion++;
+			
+			verSimulacion(poblacion.getIndividuals(),generacion,poblacion.getFittest(0).getFitness());
+				
+		}
+			
+		return poblacion.getFittest(0);
 
 	}
 	
@@ -484,8 +518,9 @@ public class Simulacion{
 		if(adn) {
 			
 			nombreADN = Entradas.texto("Inserte el nombre del ADN a guadar: ");
+			String descripcion = Entradas.texto("Inserte una descricion para este ADN: ");
 			
-			if(guardarADN(nombreADN,poblacion.getFittest(0))) {
+			if(guardarADN(nombreADN,poblacion.getFittest(0),descripcion)) {
 				
 				System.out.println("ADN guardado correctamente");
 				
@@ -496,6 +531,74 @@ public class Simulacion{
 			}
 			
 		}
+
+	}
+	
+	public Agente continuarEntrenamientoGUI(int numAgentes, int numGeneraciones, int pasos, String adn1, String adn2) {
+		
+		if(cargarADN(this.red.getNombre(),adn1,true)) {
+				
+			System.out.println("ADN cargado correctamente");
+				
+		}else {
+				
+			System.err.println("Error al cargar el ADN");
+			return null;
+		}
+		
+		boolean segundo =false;
+		
+		if(adn2.length()>0) {
+			
+			if(this.cargarADN(this.red.getNombre(),adn2,false)) {
+				
+				System.out.println("ADN cargado correctamente");
+				segundo=true;
+			}else {
+				
+				System.err.println("Error al cargar el ADN");
+				return null;
+			}
+			
+		}
+		
+		this.ga = new GeneticAlgorithm(numAgentes, 0.03, 0.92, 22,this.entorno);
+
+		Poblacion poblacion = ga.iniciarPoblacion(this.red.getParametros().length);
+
+		ga.calculoFitnessPoblacion(poblacion);
+		
+		for (int i = 0; i < poblacion.size(); i++) {
+			
+			if(Math.random()>0.5 && adn_red.length>0 && segundo) {
+				poblacion.getIndividual(i).setCromosomas(adn_red_2);
+			}else {
+				poblacion.getIndividual(i).setCromosomas(adn_red);
+			}
+			
+			poblacion.getIndividual(i).setMaxPasos(pasos);
+			
+		}
+		
+		int generacion = 1;
+		
+		while (ga.condicionTerminacion(generacion,numGeneraciones) == false) {
+			
+			poblacion = ga.cruzarPoblacion(poblacion,entorno);
+			
+			poblacion = ga.mutarPoblacion(poblacion);
+			
+			ga.calculoFitnessPoblacion(poblacion);
+			
+			this.red.probarPoblacion(poblacion);
+				
+			verSimulacion(poblacion.getIndividuals(),generacion,poblacion.getFittest(0).getFitness());
+			
+			generacion++;
+			
+		}
+					
+		return poblacion.getFittest(0);
 
 	}
 
@@ -595,11 +698,11 @@ public class Simulacion{
 		
 	}
 	
-	public boolean guardarADN(String nombreADN, Agente mejor) {
+	public boolean guardarADN(String nombreADN, Agente mejor, String descripcion) {
 		
 		DAO db = new DAO();
 		
-		return db.guardarGenes(red.getNombre(),nombreADN, mejor.getCromosomas());
+		return db.guardarGenes(red.getNombre(),nombreADN, mejor.getCromosomas(),descripcion);
 		
 	}
 

@@ -117,7 +117,7 @@ public class EstablecerCasillas2 extends PApplet {
 	
 	@Override
 	public void exit() {
-		save("entradas\\in_"+mapa+".png");
+		save("entradas\\in_"+mapa);
 		noLoop();
 
 	}

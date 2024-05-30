@@ -166,7 +166,7 @@ public class Index extends JFrame implements ActionListener{
 
 	private void entreno() {
 
-		new Entrenar(this);
+		new Entrenar(this,this.simulacion);
 		this.setVisible(false);
 
 	}

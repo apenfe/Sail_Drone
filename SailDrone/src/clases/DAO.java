@@ -47,12 +47,10 @@ public class DAO{
 		
 	}
 	
-	public boolean guardarGenes(String red, String adn, double[] genes) {
+	public boolean guardarGenes(String red, String adn, double[] genes, String descripcion) {
 		
 		try {
 			
-			String descripcion = Entradas.texto("Inserte una descricion para este ADN: ");
-
 			Connection conn = DriverManager.getConnection(URL, USER, PASS);
 			Statement stmt = conn.createStatement();
 

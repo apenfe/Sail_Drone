@@ -2,7 +2,6 @@ package ventanas;
 
 import javax.swing.*;
 
-import clases.Entradas;
 import clases.Simulacion;
 
 import java.awt.*;
@@ -13,7 +12,7 @@ public class Cargar extends JFrame implements ActionListener{
 	private Index indice;
 	private Simulacion simulacion;
 	private Container contenedor;
-	private JLabel icon, mapa, entorno, red, labelInfo;
+	private JLabel mapa, entorno, red, labelInfo;
 	private JTextField campoMapa, campoRed, campoEntorno;
 	private JButton cargar, limpiar, volver;
 	private JLabel lblNewLabel_1, titulo;

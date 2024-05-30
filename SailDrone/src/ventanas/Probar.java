@@ -219,7 +219,7 @@ public class Probar extends JFrame implements ActionListener{
 		this.contenedor.add(lblNewLabel_1);
 		
 		    // Cargar la nueva imagen en un ImageIcon
-		    ImageIcon newImageIcon = new ImageIcon("mapas\\"+this.simulacion.getEntorno().getCarta()+".png");
+		    ImageIcon newImageIcon = new ImageIcon(this.simulacion.getEntorno().getCarta());
 		    
 		    // Escalar la imagen al tamaño del JLabel
 		    Image image = newImageIcon.getImage().getScaledInstance(lblNewLabel_1.getWidth(), lblNewLabel_1.getHeight(), Image.SCALE_SMOOTH);
