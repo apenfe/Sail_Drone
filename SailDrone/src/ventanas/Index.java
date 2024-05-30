@@ -11,7 +11,6 @@ public class Index extends JFrame implements ActionListener{
 	
 	public Simulacion simulacion = new Simulacion();
 	private Container contenedor;
-	private JLabel icon;
 	public JButton cargar, crear, entreno, prueba, infoActual, salir;
 	private JLabel lblNewLabel_1, titulo;
 	
@@ -143,7 +142,6 @@ public class Index extends JFrame implements ActionListener{
 		lblNewLabel_1.setBounds(273, 0, 991, 761);
 		getContentPane().add(lblNewLabel_1);
 		
-
 	}
 
 	private void cargar() {
@@ -175,7 +173,7 @@ public class Index extends JFrame implements ActionListener{
 
 	private void prueba() {
 
-		new Probar(this);
+		new Probar(this,this.simulacion);
 		this.setVisible(false);
 	}
 	

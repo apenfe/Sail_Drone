@@ -42,17 +42,17 @@ public class VerRed extends PApplet {
 
 	  void updateNeuralNetwork() {
 	    // Simular datos de entrada aleatorios
-	    for (int i = 0; i < layers[0]; i++) {
-	      nodeActivation[0][i] = random(0, 1);
-	    }
+	  //  for (int i = 0; i < layers[0]; i++) {
+	   //   nodeActivation[0][i] = random(0, 1);
+	   // }
 	    // Simular fuerza sináptica aleatoria
-	    for (int i = 0; i < layers.length - 1; i++) {
-	      for (int j = 0; j < layers[i]; j++) {
-	        for (int k = 0; k < layers[i + 1]; k++) {
-	          synapticStrength[i][j][k] = random(0, 1);
-	        }
-	      }
-	    }
+	  //  for (int i = 0; i < layers.length - 1; i++) {
+	    //  for (int j = 0; j < layers[i]; j++) {
+	      //  for (int k = 0; k < layers[i + 1]; k++) {
+	        //  synapticStrength[i][j][k] = random(0, 1);
+	     //   }
+	    //  }
+	   // }
 	  }
 
 	  void drawNeuralNetwork() {
@@ -110,8 +110,6 @@ public class VerRed extends PApplet {
 	    return maxNeurons;
 	  }
 	}
-	
-	
 	
 	@Override
 	public void exit() {

@@ -176,10 +176,12 @@ public class Principal{
 		}
 		
 		respuesta = Entradas.texto("¿Desea guardar la red neuronal? S - SI ");
-		
+	
 		if(respuesta.equalsIgnoreCase("S")) {
 			
-			if(simulacionActual.getRed().guardarRed()) {
+			respuesta = Entradas.texto("Descripcion de la red: ");
+			
+			if(simulacionActual.getRed().guardarRed(respuesta)) {
 				System.out.println("RED GUARDADA");
 			}else {
 				System.err.println("ERROR AL GUARDAR RED");

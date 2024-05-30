@@ -200,11 +200,11 @@ public class RedNeuronal{
 				+ numCapas + ", numNeuronas=" + numNeuronas + ", capas=" + Arrays.toString(capas) + "]";
 	}
 	
-	public boolean guardarRed() {
+	public boolean guardarRed(String descripcion) {
 		
 		DAO db = new DAO();
 		
-		return db.guardarRed(this);
+		return db.guardarRed(this, descripcion);
 		
 	}
 	

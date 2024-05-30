@@ -17,12 +17,10 @@ public class DAO{
 	private static final String USER = "root";
 	private static final String PASS = "1234";
 	
-	public boolean guardarRed(RedNeuronal red) {
+	public boolean guardarRed(RedNeuronal red, String descripcion) {
 
 		try {
 			
-			String descripcion = Entradas.texto("Inserte una descricion para la RED NEURONAL: ");
-
 			Connection conn = DriverManager.getConnection(URL, USER, PASS);
 			Statement stmt = conn.createStatement();
 

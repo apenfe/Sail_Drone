@@ -3,7 +3,9 @@ package clases;
 import agente.Agente;
 import entorno.Entorno;
 import red.*;
+import ventanas.Probar;
 import visual.EstablecerCasillas;
+import visual.EstablecerCasillas2;
 import visual.Plot6Agent;
 import visual.VerEntrenamiento;
 import ga.*;
@@ -95,6 +97,45 @@ public class Simulacion{
 
 	}
 	
+	public boolean randomGUI(int numAgentes, int pasos, double paso, int area) {
+		
+		agentes = new Agente[numAgentes];
+		estadoSimulacion(numAgentes);
+		
+		for (int i = 0; i < agentes.length; i++) {
+			
+			agentes[i] = new Agente(i,this.entorno);
+			double[] param = new double[this.red.getParametros().length];
+			
+			for (int j = 0; j < param.length; j++) {
+				
+				param[j]= -1 + 2 * Math.random();
+				
+			}
+	
+			agentes[i].setCromosomas(param);	
+			agentes[i].setMaxPasos(pasos);
+			
+		}
+		
+		this.red.probarPoblacion(agentes);
+		
+		int indice = 0;
+		double max= Double.MIN_VALUE;
+		
+		for (int i = 0; i < agentes.length; i++) {
+			
+			if(agentes[i].getFitness()>max) {
+				indice=i;
+			}
+			
+		}
+		
+		verSimulacion(agentes,0,agentes[indice].getFitness());
+		return true;
+	}
+	
+	
 	public void probarADN() {
 		
 		int pasos = this.configurarEntorno();
@@ -140,6 +181,47 @@ public class Simulacion{
 		}
 		
 		verSimulacion(agentes,0,agentes[indice].getFitness());
+
+	}
+	
+	public boolean adnGUI(int numAgentes, String nombreADN, int pasos, double paso, int area) {
+			
+		if(cargarADN(this.red.getNombre(),nombreADN,true)) {
+				
+			System.out.println("ADN cargado correctamente");
+				
+		}else {
+				
+			System.err.println("Error al cargar el ADN");
+			return false;
+				
+		}
+		
+		agentes = new Agente[numAgentes];
+		
+		for (int i = 0; i < agentes.length; i++) {
+			
+			agentes[i] = new Agente(i,this.entorno);	
+			agentes[i].setCromosomas(this.adn_red);
+			agentes[i].setMaxPasos(pasos);
+			
+		}
+		
+		this.red.probarPoblacion(agentes);
+		
+		int indice = 0;
+		double max= Double.MIN_VALUE;
+		
+		for (int i = 0; i < agentes.length; i++) {
+			
+			if(agentes[i].getFitness()>max) {
+				indice=i;
+			}
+			
+		}
+		
+		verSimulacion(agentes,0,agentes[indice].getFitness());
+		return true;
 
 	}
 	
@@ -267,6 +349,19 @@ public class Simulacion{
 		
 		int pasos = Entradas.entero("\nInserte el nº maximo de pasos: ");
 		return pasos;
+		
+	}
+	
+	public boolean configurarEntornoGUI(int area, double paso) {
+		
+		EstablecerCasillas2 applet = new EstablecerCasillas2(this.entorno.getCarta(),this.entorno);
+		applet.setXY((int)entorno.getAncho(),(int)entorno.getAlto());
+		PApplet.runSketch(new String[]{"visual/EstablecerCasillas2"}, applet);
+	   
+		this.entorno.setAreaAprox(area);
+		this.entorno.setPaso(paso);
+		
+		return false;
 		
 	}
 	
